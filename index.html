@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<!-- saved from url=(0060)https://getbootstrap.com/docs/4.1/examples/starter-template/ -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="https://getbootstrap.com/favicon.ico">
+
+    <title>仮</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="d/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <!--  <link href="http://www.justinaguilar.com/animations/css/animations.css" rel="stylesheet"> -->
+    <!--<link href="d/css/animate.css" rel="stylesheet"> -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
+    <link href="d/css/cssanimation.min.css" rel="stylesheet">
+    <link href="d/css/original.css" rel="stylesheet">
+
+  </head>
+
+  <body>
+
+    <nav class="navbar navbar-expand-md navbar-dark fixed-top" style="background-color: #4CAF50;">
+      <a class="navbar-brand" href="https://getbootstrap.com/docs/4.1/examples/starter-template/#">(仮)</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+    </nav>
+    <div class="page">
+ 		<div class="row">
+ 		<div class= "mainarea col-lg-9 col-md-12">
+        <div class="calender" id="maincal">
+            <div class="monthline">
+        		<button type="button" class="btn btn-yellow rounded-circle p-0 allow" @click="calenderchangeprev">
+        			<i class="fas fa-reply"></i>
+        		</button>
+                <span class="month">
+        			{{ year }}年<span v-if="month <= 9">&nbsp;&nbsp;</span>{{month}}月
+                </span>
+        		<button type="button" class="btn btn-yellow rounded-circle p-0 allow" @click="calenderchangenext">
+        			<i class="fas fa-share"></i>
+        		</button>
+        	</div>
+            <div class="wrapper">
+                <div v-bind:class="clen">
+                    <div class="weeks">
+            			<div class="week border border-dark sunday">日</div>
+            			<div class="week border border-dark ">月</div>
+            			<div class="week border border-dark ">火</div>
+            			<div class="week border border-dark ">水</div>
+            			<div class="week border border-dark ">木</div>
+            			<div class="week border border-dark ">金</div>
+            			<div class="week border border-dark ">土</div>
+              		</div>
+                   <div class="days" v-for="(weeks,windex) in calender" v-for>
+
+                        <div class="day border border-dark" v-for="(days,dindex) in weeks.days" >
+                        	<div v-bind:class = "editMoveAnimation(windex,dindex)"
+                            @mouseover="editDisplay(windex,dindex)"
+                        		@mouseout="editNoneDisplay(windex,dindex)"
+                        		v-if="days !== '-1' && calenderLastLineCheck(windex,dindex) === false">
+                                <div class="date" v-bind:style="color(windex,dindex)" >
+                                    {{days}}
+                                </div>
+                                <div v-bind:class="[weeks['flag'][dindex] === true ? editOnMouse:editOffMouse]"
+                                @click="editClickSet(windex,dindex)">
+                                    <button type="button" class="btn btn-deepgreen rounded-circle p-0 editbtn">
+                            			<i class="fas fa-edit"></i>
+                            		</button>
+                                </div>
+                            </div>
+
+
+                            <div class="daydouble" style="width: 100%;height: 100%" v-else-if="days !== '-1'
+                              && calenderLastLineCheck(windex,dindex) === true">
+                                <div class="dateherf border-bottom border-dark">
+                                    <div class="sunday date dateherfchara">
+                                    	{{days}}
+                                    </div>
+                                </div>
+                                <div class="dateherf">
+                                    <div class="sunday date dateherfchara">{{calenderLastLine[dindex]}}</div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+             </div>
+             </div>
+        </div>
+        </div>
+        <div class="col-lg-3" id="sideber">
+
+    	</div>
+        </div>
+    </div>
+
+
+    <script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
+    <script src="d/js/popper.min.js"></script>
+    <script src="d/js/vue.js"></script>
+    <script src="d/js/calender.js"></script>
+    <script src="d/js/bootstrap.min.js"></script>
+    <script>
+        calender.start();
+    </script>
+
+
+</body></html>

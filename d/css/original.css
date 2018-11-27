@@ -1,0 +1,148 @@
+body {
+  padding-top: 5rem;
+}
+.flagicon{
+	color:#e84242;
+}
+.starter-template {
+  padding: 3rem 1.5rem;
+  text-align: center;
+}
+.page {
+	width: 80%;
+	margin-left: 10%;
+}
+.wrapper {
+    position: relative;
+    width: 100%;
+}
+.wrapper:before {
+    content:"";
+    display: block;
+    padding-top: 55%;
+}
+.calendermain{
+	position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    margin-top: 8px;
+    background-image: url("../img/nya.jpg");
+    background-size:100% 100%;
+}
+.monthline{
+    width: 100%;
+	text-align:center;
+	font-size: 2.5vw;
+	font-weight: bold;
+
+}
+.allow{
+	position: relative;
+	bottom: 3px;
+	display: inline-block;
+	margin-bottom: 1px;
+	cursor: pointer;
+}
+.monthline button{
+	width: 2.5vw;
+	height: 2.5vw;
+}
+.weeks{
+	height: 5%;
+    display: flex;
+}
+.week{
+	width: calc(100% / 7);
+	height: 100%;
+	text-align:center;
+	font-weight: bold;
+	font-size: 1vw;
+	position: relative;
+}
+.days{
+    display: flex;
+	height:19%;
+}
+.day{
+	width: calc(100% / 7);
+	height: 100%;
+}
+.dayonce{
+    width: 100%;
+    height: 100%;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-justify-content: flex-end;
+    justify-content: flex-end;
+    -webkit-align-items: flex-end;
+    align-items: flex-end;
+    -moz-transition: -moz-transform 0.1s linear;
+    -webkit-transition: -webkit-transform 0.1s linear;
+    -o-transition: -o-transform 0.1s linear;
+    -ms-transition: -ms-transform 0.1s linear;
+    transition: transform 0.1s linear;
+}
+.dayonceedit{
+    position: relative;
+	z-index: 400;
+    -webkit-transform: scale(2.0);
+    -moz-transform: scale(2.0);
+    -o-transform: scale(2.0);
+    -ms-transform: scale(2.0);
+    transform: scale(2.0);
+    background-color: white;
+}
+.date{
+	position: absolute;
+    width: auto;
+	font-size: 2.6vw;
+	font-weight: bold;
+	color:black;
+    padding-right: 1.5%;
+	z-index: 1;
+}
+.dateherf{
+    height: 50%;
+    position: relative;
+}
+.dateherfchara{
+    height: 100% !important;
+    font-size: 1.8vw !important;
+    position: static !important;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-justify-content: flex-end;
+    justify-content: flex-end;
+    -webkit-align-items: flex-end;
+    align-items: flex-end;
+}
+.sunday{
+	color:#F44336;
+}
+.caledit{
+	width: 100%;
+	height: 100%;
+	background-color: rgba(0,0,0,0.3);
+	top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+	position: relative;
+	z-index: 200;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-justify-content: center;
+    justify-content: center;
+    -webkit-align-items: stretch;
+    align-items: center;
+    cursor: pointer;
+}
+.editnone{
+	display:none;
+}
+.editbtn{
+    width: 3vw;
+	height: 3vw;
+}
