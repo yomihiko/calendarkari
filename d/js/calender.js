@@ -18,13 +18,13 @@ var calender = new Vue({
     calender: [],
     calenderLastLine: [],//calendercol+1の行の週情報 通常一番下の行の適切な曜日の欄を半分に分割して表示する
     editOneDay: [],
-    calurl: 'calender.php?cal=',
+    calurl: "calender.php?cal=",
     chengesecond: 0,
     editflag: {},
     editOnMouse: "caledit cssanimation fadeIn",
 	editOffMouse: "caledit editnone",
-    DayOnceEdit: "dayonce dayonceedit border border-deepgreen",
-    DayOnceNoneEdit:"dayonce"
+    DayOnceEdit: "daywapper dayonceedit border border-deepgreen",
+    DayOnceNoneEdit:"daywapper"
   },
   methods: {
       start:function(){
@@ -102,7 +102,7 @@ var calender = new Vue({
               this.calenderInAnimation();
           })
           .fail( (data) => {
-
+            console.log(data);
           })
       },
       editOnMouseCheck:function(windex,dindex){

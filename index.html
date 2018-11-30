@@ -7,7 +7,7 @@
     <meta name="author" content="">
     <link rel="icon" href="https://getbootstrap.com/favicon.ico">
 
-    <title>仮</title>
+    <title>カレンダー仮</title>
 
     <!-- Bootstrap core CSS -->
     <link href="d/css/bootstrap.min.css" rel="stylesheet">
@@ -55,15 +55,18 @@
             			<div class="week border border-dark ">金</div>
             			<div class="week border border-dark ">土</div>
               		</div>
-                   <div class="days" v-for="(weeks,windex) in calender" v-for>
+                   <div class="days" v-for="(weeks,windex) in calender">
 
                         <div class="day border border-dark" v-for="(days,dindex) in weeks.days" >
+                            
                         	<div v-bind:class = "editMoveAnimation(windex,dindex)"
                             @mouseover="editDisplay(windex,dindex)"
                         		@mouseout="editNoneDisplay(windex,dindex)"
                         		v-if="days !== '-1' && calenderLastLineCheck(windex,dindex) === false">
+                        	    
                                 <div class="date" v-bind:style="color(windex,dindex)" >
-                                    {{days}}
+                                    <div class="soi smalls">敬老の日</div>
+                                    <div class="soi">{{days}}</div>
                                 </div>
                                 <div v-bind:class="[weeks['flag'][dindex] === true ? editOnMouse:editOffMouse]"
                                 @click="editClickSet(windex,dindex)">
