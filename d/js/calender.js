@@ -14,6 +14,7 @@ var calender = new Vue({
     ・calender カレンダーの日にちの数字を格納 日が存在しない場合は-1
     ・flag カレンダーの各日上のマウスオーバー監視フラグ マウスオーバーしているときはtrue
     ・color 各日の数字の色 RGB
+    ・whatday 何の日か 〇〇の日など
     **/
     calender: [],
     calenderLastLine: [],//calendercol+1の行の週情報 通常一番下の行の適切な曜日の欄を半分に分割して表示する
@@ -21,8 +22,8 @@ var calender = new Vue({
     calurl: "calender.php?cal=",
     chengesecond: 0,
     editflag: {},
-    editOnMouse: "caledit cssanimation fadeIn",
-	editOffMouse: "caledit editnone",
+    editOnMouse: "caleditOnMouse cssanimation fadeIn",
+	editOffMouse: "caleditOnMouse editnone",
     DayOnceEdit: "daywapper dayonceedit border border-deepgreen",
     DayOnceNoneEdit:"daywapper"
   },
@@ -94,6 +95,7 @@ var calender = new Vue({
             	  wkob.flag = {d0:false,d1:false,d2:false,d3:false,d4:false,d5:false,d6:false};
             	  wkob.days = data.calender[i];
                   wkob.color = data.color[i];
+                  wkob.whatday = {d0:"テストの日0",d1:"テストの日1",d2:"テストの日2",d3:"テストの日3",d4:"テストの日4",d5:"テストの日5",d6:"テストの日6"};
             	  this.calender.push(wkob);
                   this.editOneDay = [-1,-1];
 
@@ -123,8 +125,6 @@ var calender = new Vue({
 
       },
       editNoneDisplay:function(windex,dindex){
-
-
     	  this.calender[windex]["flag"][dindex] = false;
       },
       color:function(windex,dindex){
