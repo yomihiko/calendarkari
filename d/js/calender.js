@@ -17,7 +17,7 @@ var calender = new Vue({
     ・whatday 何の日か 〇〇の日など
     **/
     calender: [],
-    calenderLastLine: [],//calendercol+1の行の週情報 通常一番下の行の適切な曜日の欄を半分に分割して表示する
+    calenderLastLine: {},//calendercol+1の行の週情報 通常一番下の行の適切な曜日の欄を半分に分割して表示する
     editOneDay: [],
     calurl: "calender.php?cal=",
     chengesecond: 0,
@@ -70,7 +70,8 @@ var calender = new Vue({
           if(windex !== this.calendercol - 1){
               return false;
           }
-          else if(this.calenderLastLine[dindex] !== "-1"){
+          else if(Object.keys(this.calenderLastLine).length > 0 && this.calenderLastLine[dindex] !== "-1"){
+
               return true;
           }
           return false;
@@ -100,7 +101,12 @@ var calender = new Vue({
                   this.editOneDay = [-1,-1];
 
               }
-              this.calenderLastLine = data.calender[this.calendercol];
+              if(data.calender[this.calendercol] !== undefined){
+                  this.calenderLastLine = data.calender[this.calendercol];
+              }
+              else{
+                  this.calenderLastLine = {};
+              }
               this.calenderInAnimation();
           })
           .fail( (data) => {
