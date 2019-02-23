@@ -21,7 +21,7 @@ body {
     display: block;
     padding-top: 55%;
 }
-.calendermain{
+.calendarmain{
 	position: absolute;
     top: 0;
     left: 0;
@@ -74,8 +74,8 @@ body {
     height: 100%;
     position: relative;
     display: flex;
-    justify-content: flex-end;
-    align-items: flex-end;
+    justify-content: flex-start;
+    align-items: flex-start;
     transition: transform 0.1s linear;
 }
 .dayarea{
@@ -100,7 +100,7 @@ body {
 }
 .daystringinput input{
     font-size: 0.3vw;
-    height: 50%;
+    height: 30%;
     width: 100%;
     padding-left:5%;
 }
@@ -114,6 +114,18 @@ body {
 	z-index: 400;
     transform: scale(2.0);
     background-color: white;
+}
+.colorWrapper{
+    transform: scale(0.7) !important;
+    position: relative;
+    right: 7px;
+}
+.pickerBtn{
+    background: white;
+    border-color: red;
+}
+.pickerBtn:hover{
+    border-color: blue;
 }
 .dateherf{
     height: 50%;

@@ -17,6 +17,7 @@
     <!--<link href="d/css/animate.css" rel="stylesheet"> -->
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
     <link href="d/css/cssanimation.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/spectrum/1.8.0/spectrum.min.css">
     <link href="d/css/original.css" rel="stylesheet">
 
   </head>
@@ -32,18 +33,19 @@
     <div class="page">
  		<div class="row">
  		<div class= "mainarea col-lg-9 col-md-12">
-        <div class="calender" id="maincal">
+        <div class="calendar" id="maincal">
             <div class="monthline">
-        		<button type="button" class="btn btn-yellow rounded-circle p-0 allow" @click="calenderchangeprev">
+        		<button type="button" class="btn btn-yellow rounded-circle p-0 allow" @click="calendarchangeprev">
         			<i class="fas fa-reply"></i>
         		</button>
                 <span class="month">
         			{{ year }}年<span v-if="month <= 9">&nbsp;&nbsp;</span>{{month}}月
                 </span>
-        		<button type="button" class="btn btn-yellow rounded-circle p-0 allow" @click="calenderchangenext">
+        		<button type="button" class="btn btn-yellow rounded-circle p-0 allow" @click="calendarchangenext">
         			<i class="fas fa-share"></i>
         		</button>
         	</div>
+            <input type="text" id="picker">
             <div class="wrapper">
                 <div v-bind:class="clen">
                     <div class="weeks">
@@ -55,25 +57,26 @@
             			<div class="week border border-dark ">金</div>
             			<div class="week border border-dark ">土</div>
               		</div>
-                   <div class="OneMonthdays" v-for="(weeks,windex) in calender">
+                   <div class="OneMonthdays" v-for="(weeks,windex) in calendar">
 
                         <div class="day border border-dark" v-for="(days,dindex) in weeks.days" >
 
                         	<div v-bind:class = "editMoveAnimation(windex,dindex)"
                             @mouseover="editDisplay(windex,dindex)"
                         		@mouseout="editNoneDisplay(windex,dindex)"
-                        		v-if="days !== '-1' && calenderLastLineCheck(windex,dindex) === false">
+                        		v-if="days !== '-1' && calendarLastLineCheck(windex,dindex) === false">
 
-                                <div class="dayarea" v-bind:style="color(windex,dindex)" >
-                                    <div class="daystring" v-if="editClickCheck(windex,dindex) === false">
-                                        {{calender[windex].whatday[dindex]}} <!-- 何の日か表示 -->
+                                <div class="dayarea" >
+                                    <div class="daystring" v-if="editClickCheck(windex,dindex) === false" v-bind:style="color(windex,dindex)">
+                                        {{calendar[windex].whatday[dindex]}} <!-- 何の日か表示 -->
                                     </div>
 
                                     <div class="daystringinput" v-else>
-                                        <input v-model="calender[windex].whatday[dindex]" class="form-control" type="text"> <!-- 何の日かを入力 -->
+                                        <input v-model="calendar[windex].whatday[dindex]" class="form-control" type="text"> <!-- 何の日かを入力 -->
+                                        <span class="colorWrapper"><input v-model="calendar[windex].color[dindex]" type="text" class="colorSelecter"></span>
                                     </div>
 
-                                    <div class="daynumber">{{days}}</div>
+                                    <div class="daynumber" v-bind:style="color(windex,dindex)">{{days}}</div>
                                 </div>
                                 <div v-bind:class="[weeks['flag'][dindex] === true ? editOnMouse:editOffMouse]"
                                 @click="editClickSet(windex,dindex)">
@@ -85,14 +88,14 @@
 
 
                             <div class="daydouble" style="width: 100%;height: 100%" v-else-if="days !== '-1'
-                              && calenderLastLineCheck(windex,dindex) === true">
+                              && calendarLastLineCheck(windex,dindex) === true">
                                 <div class="dateherf border-bottom border-dark">
                                     <div class="sunday date dateherfchara">
                                     	{{days}}
                                     </div>
                                 </div>
                                 <div class="dateherf">
-                                    <div class="sunday date dateherfchara">{{calenderLastLine[dindex]}}</div>
+                                    <div class="sunday date dateherfchara">{{calendarLastLine[dindex]}}</div>
                                 </div>
                             </div>
 
@@ -112,11 +115,10 @@
     <script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
     <script src="d/js/popper.min.js"></script>
     <script src="d/js/vue.js"></script>
-    <script src="d/js/calender.js"></script>
     <script src="d/js/bootstrap.min.js"></script>
-    <script>
-        calender.start();
-    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/spectrum/1.8.0/spectrum.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/spectrum/1.8.0/i18n/jquery.spectrum-ja.min.js"></script>
+    <script src="d/js/calendar.js"></script>
 
 
 </body></html>
