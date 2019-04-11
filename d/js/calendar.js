@@ -7,6 +7,7 @@ var calendar = new Vue({
     year: 0,//表示する年
     month: 0,//表示する月
     calendarcol: 5, //カレンダーを何行表示するか
+    weekrow: 7,//一週間は何日か
     clen: 'calendarmain',//カレンダー全体に適用するclass属性
     /**
     calendar
@@ -19,15 +20,19 @@ var calendar = new Vue({
     ・whatday 何の日か 〇〇の日など
     **/
     calendar: [],
+    weekString: [],
+    weekColor: [],
+    editYoubi: -1,
     calendarLastLine: {},//calendarcol+1の行の週情報 通常一番下の行の適切な曜日の欄を半分に分割して表示する
-    editOneDay: [],
+    editOneDay: [],//現在編集中の日にち [0]=週番号 [1]=日番号
     calurl: "calendar.php?cal=",
-    chengesecond: 0,
-    editflag: {},
+    chengeSecond: 0,
     editOnMouse: "caleditOnMouse cssanimation fadeIn",
 	editOffMouse: "caleditOnMouse editnone",
-    DayOnceEdit: "daywapper dayonceedit border border-deepgreen",
-    DayOnceNoneEdit:"daywapper"
+    dayOnceEdit: "daywapper dayonceedit border border-deepgreen",
+    dayOnceNoneEdit:"daywapper",
+    youbiEditDayOnce:"daywapper border-left border-right border-deepgreen",
+    youbiEditDayOnceLastWeek:"daywapper border-left border-bottom border-right border-deepgreen"
   },
   methods: {
       start:function(){
@@ -43,7 +48,7 @@ var calendar = new Vue({
       calendarOutAnimation:function(){//カレンダーを非表示にするときのアニメーション
           this.clen = 'calendarmain cssanimation fadeOut';
           var d = new Date();
-          this.chengesecond = d.getTime();
+          this.chengeSecond = d.getTime();
       },
       calendarchangenext:function(){//次の月へ進めるときの処理
           if(this.month == 12){
@@ -84,7 +89,7 @@ var calendar = new Vue({
       calendarget:function(){
           var url = this.calurl + this.year + this.month;
           var d = new Date();
-          if(d.getTime() - this.chengesecond <= 500){
+          if(d.getTime() - this.chengeSecond <= 500){
         	  return;
           }
       	$.ajax({
@@ -94,15 +99,20 @@ var calendar = new Vue({
           })
           .done( (data) => {
               var st;
-              var wkob;
+              var wkob,wkweek;
               this.calendar = [];
+              this.weekString = [];
+              this.weekColor = [];
+              for(var i = 0;i < this.weekrow;i++){
+                  this.weekString.push(data.weekString[i]);
+                  this.weekColor.push(data.weekColor[i]);
+              }
               for(var i = 0;i < this.calendarcol;i++){
             	  wkob = {};
-            	  wkob.flag = {d0:false,d1:false,d2:false,d3:false,d4:false,d5:false,d6:false};
+            	  wkob.flag = data.editFlag[i];
             	  wkob.days = data.calendar[i];
                   wkob.color = data.color[i];
-                  wkob.color.d5 = "#eeeeee";
-                  wkob.whatday = {d0:"テストの日0",d1:"テストの日1",d2:"テストの日2",d3:"テストの日3",d4:"テストの日4",d5:"テストの日5",d6:"テストの日6"};
+                  wkob.whatday = data.whatDay[i];
             	  this.calendar.push(wkob);
                   this.editOneDay = [-1,-1];
 
@@ -126,38 +136,63 @@ var calendar = new Vue({
     	  }
     	  return this.editOnMouse;
       },
-      editDisplay:function(windex,dindex){//
+      editDisplay:function(windex,dindex){//編集ボタンをクリックしたとき
           if(this.editClickCheck(windex,dindex) == true ){
-              this.calendar[windex]["flag"][dindex] = false;
+              this.calendar[windex]["flag"].splice(dindex,1,false) ;
           }
           else{
-    	         this.calendar[windex]["flag"][dindex] = true;
+    	         this.calendar[windex]["flag"].splice(dindex,1,true) ;
           }
 
 
       },
-      editNoneDisplay:function(windex,dindex){
-    	  this.calendar[windex]["flag"][dindex] = false;
+      editOnMouseReturnCss:function(windex,dindex){ //マウスオーバーしたとき,離したときのclass属性を返す
+          if(this.calendar[windex].flag[dindex] == true){
+              return this.editOnMouse;
+          }
+          else if(this.editYoubi == dindex){
+              return this.editOnMouse;
+          }
+          return this.editOffMouse;
       },
-      color:function(windex,dindex){ //色CSSを返す
-          return "color:"+this.calendar[windex]["color"][dindex];
+      editNoneDisplay:function(windex,dindex){//マウスをカレンダー上から離したとき
+          this.calendar[windex]["flag"].splice(dindex,1,false) ;
       },
-      editClickSet:function(windex,dindex){
+      editYoubiDisplay:function(youbiindex){
+          this.editYoubi = youbiindex;
+      },
+      editYoubiNoneDisplay:function(){
+          this.editYoubi = -1;
+      },
+      editYoubiReturnCss:function(youbiindex){
+          if(youbiindex == this.editYoubi){
+              return this.editOnMouse;
+          }
+          return this.editOffMouse;
+      },
+      color:function(colorcode){ //色CSSを返す
+          return "color:"+colorcode;
+      },
+      colorWandD:function(windex,dindex){//windex,dindexの色情報から色CSSを返す
+          return this.color(this.calendar[windex]["color"][dindex]);
+      },
+      editClickSet:function(windex,dindex){//クリックされた日にちをセットする
           pickerObj(this,windex,dindex);
-          this.calendar[windex]["flag"][dindex] = false;
+          this.calendar[windex]["flag"].splice(dindex,1,false) ;
           this.editOneDay = [windex,dindex];
       },
-      editClickCheck:function(windex,dindex){
+      editClickCheck:function(windex,dindex){//選択中の日にちならtrue
           if(this.editOneDay[0] == windex && this.editOneDay[1] == dindex){
               return true;
           }
           return false;
       },
-      editMoveAnimation:function(windex,dindex){
+      editReturnCss:function(windex,dindex){//編集モードに応じて適切なclass属性を返す
+          //日にちを編集しているとき
           if(this.editOneDay[0] == windex && this.editOneDay[1] == dindex){
-              return this.DayOnceEdit;
+              return this.dayOnceEdit;
           }
-          return this.DayOnceNoneEdit;
+          return this.dayOnceNoneEdit;
       }
   }
 });

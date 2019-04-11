@@ -21,6 +21,9 @@ body {
     display: block;
     padding-top: 55%;
 }
+.calendar{
+    font-size: 10vw;
+}
 .calendarmain{
 	position: absolute;
     top: 0;
@@ -34,7 +37,7 @@ body {
 .monthline{
     width: 100%;
 	text-align:center;
-	font-size: 2.5vw;
+	font-size: 25%;
 	font-weight: bold;
 
 }
@@ -53,13 +56,19 @@ body {
 	height: 5%;
     display: flex;
 }
+.weeks div{
+    width: 100%;
+}
 .week{
 	width: calc(100% / 7);
 	height: 100%;
-	text-align:center;
 	font-weight: bold;
-	font-size: 1vw;
+	font-size: 10%;
 	position: relative;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 .OneMonthdays{
     display: flex;
@@ -88,18 +97,19 @@ body {
 .daystring{
     width: 100%;
     height: 30%;
-    font-size: 0.8vw;
+    font-size: 8%;
     margin-top: 5%;
     margin-left: 5%;
 }
 .daystringinput{
     width: 80%;
     height: 30%;
+    font-size: 1px;
     margin-top: 5%;
     margin-left: 5%;
 }
 .daystringinput input{
-    font-size: 0.3vw;
+    font-size: 3%;
     height: 30%;
     width: 100%;
     padding-left:5%;
@@ -107,7 +117,7 @@ body {
 .daynumber{
     width: 90%;
     height: 70%;
-    font-size: 2.6vw;
+    font-size: 26%;
     text-align: right;
 }
 .dayonceedit{
@@ -133,7 +143,7 @@ body {
 }
 .dateherfchara{
     height: 100% !important;
-    font-size: 1.8vw !important;
+    font-size: 18% !important;
     position: static !important;
     display: -webkit-flex;
     display: flex;
@@ -142,9 +152,7 @@ body {
     -webkit-align-items: flex-end;
     align-items: flex-end;
 }
-.sunday{
-	color:#F44336;
-}
+
 .caleditOnMouse{
     width: 100%;
     height: 100%;
