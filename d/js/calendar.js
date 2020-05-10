@@ -25,7 +25,7 @@ var calendar = new Vue({
     editYoubi: -1,
     calendarLastLine: {},//calendarcol+1の行の週情報 通常一番下の行の適切な曜日の欄を半分に分割して表示する
     editOneDay: [],//現在編集中の日にち [0]=週番号 [1]=日番号
-    calurl: "calendar.php?cal=",
+    calurl: "svCal/calendar.php?cal=",
     chengeSecond: 0,
     editOnMouse: "caleditOnMouse cssanimation fadeIn",
 	editOffMouse: "caleditOnMouse editnone",
@@ -87,7 +87,7 @@ var calendar = new Vue({
       //カレンダーの情報をAjaxで取得
       */
       calendarget:function(){
-          var url = this.calurl + this.year + this.month;
+          var url = this.calurl + this.year + this.month;   //カレンダーJSON取得URL
           var d = new Date();
           if(d.getTime() - this.chengeSecond <= 500){
         	  return;
@@ -109,10 +109,8 @@ var calendar = new Vue({
               }
               for(var i = 0;i < this.calendarcol;i++){
             	  wkob = {};
-            	  wkob.flag = data.editFlag[i];
-            	  wkob.days = data.calendar[i];
-                  wkob.color = data.color[i];
-                  wkob.whatday = data.whatDay[i];
+            	  wkob.flag = false;
+            	  wkob.calendar = data.calendar.calendar[i];
             	  this.calendar.push(wkob);
                   this.editOneDay = [-1,-1];
 
