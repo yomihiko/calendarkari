@@ -7,11 +7,13 @@ const WEEKNUM = 7;       //1週間は何日か
 
 require_once("day.php");
 
-
+/**
+*1カ月のカレンダー情報を保持するクラス
+*/
 class Calendar implements JsonSerializable {
 
     private $year;  //年
-    private $month; //色
+    private $month; //月
     private $calArray;//カレンダーの二次元配列
 
     private function __construct($year,$month){

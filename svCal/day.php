@@ -1,4 +1,7 @@
 <?php
+/**
+* 1日の情報を保持するクラス
+*/
 class Day implements JsonSerializable{
 
     private $day;       //何日か
