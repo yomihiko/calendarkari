@@ -46,11 +46,9 @@
             <div class="wrapper">
                 <div v-bind:class="clen">
                     <div class="weeks">
-                        <div v-for="(weekst,youbiindex) in weekString">
-                        
-            			     <div class="week border border-dark" v-bind:style="color(weekColor[youbiindex])"
-                             @mouseover="editYoubiDisplay(youbiindex)"
-                         		@mouseout="editYoubiNoneDisplay()">
+                        <div v-for="(weekst,youbiindex) in calendar.weekLabel">
+
+            			     <div class="week border border-dark" v-bind:style="color(calendar.weekColor[youbiindex])">
                                  {{weekst}}
                                  <div v-bind:class="editYoubiReturnCss(youbiindex)"></div>
                              </div>
@@ -59,31 +57,16 @@
 
               		</div>
 
-                   <div class="OneMonthdays" v-for="(weeks,windex) in calendar"><!-- 何の日か表示 -->
-                        <div class="day border border-dark" v-for="(days,dindex) in weeks.days" >
+                   <div class="OneMonthdays" v-for="(week,windex) in calendar.week"><!-- 何の日か表示 -->
+                        <div class="day border border-dark" v-for="(days,dindex) in week.day" >
                             <!-- カレンダーの各日を表示 -->
-                        	<div v-bind:class = "editReturnCss(windex,dindex)"
-                            @mouseover="editDisplay(windex,dindex)"
-                        		@mouseout="editNoneDisplay(windex,dindex)"
-                        		v-if="days !== '-1' && calendarLastLineCheck(windex,dindex) === false">
-
-                                <div class="dayarea" >
-                                    <div class="daystring" v-if="editClickCheck(windex,dindex) === false" v-bind:style="colorWandD(windex,dindex)">
-                                        {{calendar[windex].whatday[dindex]}} <!-- 何の日か表示 -->
+                        	<div v-if="days.day !== -1">
+                                <div class="dayarea">
+                                    <div class="daystring">
+                                        {{days.dayName}} <!-- 何の日か表示 -->
                                     </div>
 
-                                    <div class="daystringinput" v-else><!-- 編集モード -->
-                                        <input v-model="calendar[windex].whatday[dindex]" class="form-control" type="text"> <!-- 何の日かを入力 -->
-                                        <span class="colorWrapper"><input v-model="calendar[windex].color[dindex]" type="text" class="colorSelecter"></span>
-                                    </div>
-
-                                    <div class="daynumber" v-bind:style="colorWandD(windex,dindex)">{{days}}</div>
-                                </div>
-                                <div v-bind:class="editOnMouseReturnCss(windex,dindex)"
-                                @click="editClickSet(windex,dindex)">
-                                    <button type="button" class="btn btn-deepgreen rounded-circle p-0 editbtn">
-                            			<i class="fas fa-edit"></i>
-                            		</button>
+                                    <div class="daynumber">{{days.day}}</div>
                                 </div>
                             </div>
 
@@ -119,7 +102,10 @@
     <script src="d/js/bootstrap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/spectrum/1.8.0/spectrum.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/spectrum/1.8.0/i18n/jquery.spectrum-ja.min.js"></script>
+    <script src="d/js/day.js"></script>
+    <script src="d/js/week.js"></script>
     <script src="d/js/calendar.js"></script>
+    <script src="d/js/pageController.js"></script>
 
 
 </body></html>
