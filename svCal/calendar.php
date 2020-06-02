@@ -57,7 +57,7 @@ class Calendar implements JsonSerializable {
                 if(date("w",$today_timestamp) === (String)$d
                     && date("n",$today_timestamp) === $now_month){
                         $dayIns->setDay(date("j",$today_timestamp));//日を設定する
-                        $dayIns->setDayName("天使の日");//何の日か設定する(仮)
+                        $dayIns->setDayName("");//何の日か設定する(仮)
 
                         //日曜日の場合
                         if($d == 0){

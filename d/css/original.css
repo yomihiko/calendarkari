@@ -101,41 +101,17 @@ body {
     margin-top: 5%;
     margin-left: 5%;
 }
-.daystringinput{
-    width: 80%;
-    height: 30%;
-    font-size: 1px;
-    margin-top: 5%;
-    margin-left: 5%;
-}
-.daystringinput input{
-    font-size: 3%;
-    height: 30%;
-    width: 100%;
-    padding-left:5%;
+.dayNameEditArea{
+    width: 90%;
+    font-weight: bold;
+    margin-top: -5%;
+    margin-left: -2.5%;
 }
 .daynumber{
     width: 90%;
     height: 70%;
     font-size: 26%;
     text-align: right;
-}
-.dayonceedit{
-	z-index: 400;
-    transform: scale(2.0);
-    background-color: white;
-}
-.colorWrapper{
-    transform: scale(0.7) !important;
-    position: relative;
-    right: 7px;
-}
-.pickerBtn{
-    background: white;
-    border-color: red;
-}
-.pickerBtn:hover{
-    border-color: blue;
 }
 .dateherf{
     height: 50%;

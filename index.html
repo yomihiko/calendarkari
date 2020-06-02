@@ -59,13 +59,15 @@
                    <div class="OneMonthdays" v-for="(week,windex) in calendar.week"><!-- 何の日か表示 -->
                         <div class="day border border-dark" v-if="windex <= calendarcol" v-for="(days,dindex) in week.day" >
                             <!-- カレンダーの各日を表示 -->
-                        	<div v-if="days.day !== -1">
+                        	<div v-if="days.day !== -1" style = "height:100%" v-on:mouseover="days.isEdited = true" v-on:mouseleave="days.isEdited = false">
                                 <div class="dayarea">
+                                    <!-- マウスオーバー時に編集モードにする -->
                                     <div class="daystring">
-                                        {{days.dayName}} <!-- 何の日か表示 -->
+                                        <span v-if="days.isEdited == false">{{days.dayName}}</span> <!-- 何の日か表示 -->
+                                        <input type="text" class="dayNameEditArea" v-model="days.dayName" v-if="days.isEdited">
                                     </div>
 
-                                    <div class="daynumber">{{days.day}}</div>
+                                    <div class="daynumber">{{days.day}}</div><!-- 日付表示 -->
                                 </div>
                             </div>
 
