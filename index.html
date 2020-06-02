@@ -28,10 +28,10 @@
         <span class="navbar-toggler-icon"></span>
       </button>
     </nav>
-    <div class="page">
+    <div class="page" id="maincal">
  		<div class="row">
  		<div class= "mainarea col-lg-9 col-md-12">
-        <div class="calendar" id="maincal">
+        <div class="calendar">
             <div class="monthline">
         		<button type="button" class="btn btn-yellow rounded-circle p-0 allow" @click="calendarchangeprev">
         			<i class="fas fa-reply"></i>
@@ -44,13 +44,12 @@
         		</button>
         	</div>
             <div class="wrapper">
-                <div v-bind:class="clen">
+                <div v-bind:class="clen" v-bind:style="backGroundImageStyle()">
                     <div class="weeks">
                         <div v-for="(weekst,youbiindex) in calendar.weekLabel">
 
             			     <div class="week border border-dark" v-bind:style="color(calendar.weekColor[youbiindex])">
                                  {{weekst}}
-                                 <div v-bind:class="editYoubiReturnCss(youbiindex)"></div>
                              </div>
 
                         </div>
@@ -58,7 +57,7 @@
               		</div>
 
                    <div class="OneMonthdays" v-for="(week,windex) in calendar.week"><!-- 何の日か表示 -->
-                        <div class="day border border-dark" v-for="(days,dindex) in week.day" >
+                        <div class="day border border-dark" v-if="windex <= calendarcol" v-for="(days,dindex) in week.day" >
                             <!-- カレンダーの各日を表示 -->
                         	<div v-if="days.day !== -1">
                                 <div class="dayarea">
@@ -90,7 +89,8 @@
         </div>
         </div>
         <div class="col-lg-3" id="sideber">
-
+            <input type="file" v-on:change="backGroundImageRoad">
+            <input type="range" v-model="calendar.alpha"  min="0.0" max="1.0" step="0.05">
     	</div>
         </div>
     </div>

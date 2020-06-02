@@ -6,21 +6,18 @@ var calendar = new Vue({
   data: {
     year: 0,//表示する年
     month: 0,//表示する月
-    calendarcol: 5, //カレンダーを何行表示するか
+    calendarcol: 4, //カレンダーを何行表示するか
     weekrow: 7,//一週間は何日か
     clen: 'calendarmain',//カレンダー全体に適用するclass属性
-    calendar: new Calendar(1900,1),
-    editYoubi: -1,
-    calendarLastLine: {},//calendarcol+1の行の週情報 通常一番下の行の適切な曜日の欄を半分に分割して表示する
-    editOneDay: [],//現在編集中の日にち [0]=週番号 [1]=日番号
+    calendar: new Calendar(1900,1),//カレンダーインスタンス本体
     calurl: "svCal/ope.php?cal=",
     chengeSecond: 0,
     editOnMouse: "caleditOnMouse cssanimation fadeIn",
 	editOffMouse: "caleditOnMouse editnone",
-    dayOnceEdit: "daywapper dayonceedit border border-deepgreen",
-    dayOnceNoneEdit:"daywapper",
-    youbiEditDayOnce:"daywapper border-left border-right border-deepgreen",
-    youbiEditDayOnceLastWeek:"daywapper border-left border-bottom border-right border-deepgreen"
+    // dayOnceEdit: "daywapper dayonceedit border border-deepgreen",
+    // dayOnceNoneEdit:"daywapper",
+    // youbiEditDayOnce:"daywapper border-left border-right border-deepgreen",
+    // youbiEditDayOnceLastWeek:"daywapper border-left border-bottom border-right border-deepgreen"
   },
   methods: {
       start:function(){
@@ -28,7 +25,7 @@ var calendar = new Vue({
           this.year = d.getFullYear();
           this.month = d.getMonth() + 1;
           this.calendarget();
-          this.editOneDay.push([-1,-1]);
+          //this.editOneDay.push([-1,-1]);
       },
       calendarInAnimation:function(){//カレンダーを表示する時のアニメーション
     	  this.clen = 'calendarmain cssanimation fadeIn';
@@ -116,38 +113,55 @@ var calendar = new Vue({
             console.log(data);
           })
       },
-      editOnMouseCheck:function(windex,dindex){//カレンダーの日の上のマウスオーバー判定
-    	  if( this.calendar[windex]["flag"][dindex] == !undefined
-              || this.calendar[windex]["flag"][dindex] == false){
-    		  return this.editOffMouse;
-    	  }
-    	  return this.editOnMouse;
+      backGroundImageRoad:function(data){ //ファイル選択後に背景画像を変更するメソッド
+          var c = this; //onloadメソッドの中で使用するために
+          var file = data.target.files; //ファイルを読み込む
+          var reader = new FileReader();//ファイルリーダ
+          reader.readAsDataURL(file[0]);//読み込んだ画像ファイルをURL化する
+          reader.onload = function() {
+              //カレンダーインスタンスに画像ファイルをセット
+              c.calendar.backgroundImage = reader.result;
+          };
       },
-      editDisplay:function(windex,dindex){//編集ボタンをクリックしたとき
-          if(this.editClickCheck(windex,dindex) == true ){
-              this.calendar[windex]["flag"].splice(dindex,1,false) ;
-          }
-          else{
-    	         this.calendar[windex]["flag"].splice(dindex,1,true) ;
-          }
-
-
+      backGroundImageStyle:function(){ //カレンダーの背景画像系のCSS情報を返す
+          //背景画像の設定
+          var style = "background-image:url('" + this.calendar.backgroundImage + "');"
+          //透過度の設定
+          style = style + "background-color:rgba(255,255,255," + this.calendar.alpha + ");";
+          return style;
       },
-      editOnMouseReturnCss:function(windex,dindex){ //マウスオーバーしたとき,離したときのclass属性を返す
-          if(this.calendar[windex].flag[dindex] == true){
-              return this.editOnMouse;
-          }
-          else if(this.editYoubi == dindex){
-              return this.editOnMouse;
-          }
-          return this.editOffMouse;
-      },
-      editYoubiReturnCss:function(youbiindex){
-          if(youbiindex == this.editYoubi){
-              return this.editOnMouse;
-          }
-          return this.editOffMouse;
-      },
+      // editOnMouseCheck:function(windex,dindex){//カレンダーの日の上のマウスオーバー判定
+    	//   if( this.calendar[windex]["flag"][dindex] == !undefined
+      //         || this.calendar[windex]["flag"][dindex] == false){
+    	// 	  return this.editOffMouse;
+    	//   }
+    	//   return this.editOnMouse;
+      // },
+      // editDisplay:function(windex,dindex){//編集ボタンをクリックしたとき
+      //     if(this.editClickCheck(windex,dindex) == true ){
+      //         this.calendar[windex]["flag"].splice(dindex,1,false) ;
+      //     }
+      //     else{
+    	//          this.calendar[windex]["flag"].splice(dindex,1,true) ;
+      //     }
+      //
+      //
+      // },
+      // editOnMouseReturnCss:function(windex,dindex){ //マウスオーバーしたとき,離したときのclass属性を返す
+      //     if(this.calendar[windex].flag[dindex] == true){
+      //         return this.editOnMouse;
+      //     }
+      //     else if(this.editYoubi == dindex){
+      //         return this.editOnMouse;
+      //     }
+      //     return this.editOffMouse;
+      // },
+      // editYoubiReturnCss:function(youbiindex){
+      //     if(youbiindex == this.editYoubi){
+      //         return this.editOnMouse;
+      //     }
+      //     return this.editOffMouse;
+      // },
       color:function(colorcode){ //色CSSを返す
           return "color:"+colorcode;
       }

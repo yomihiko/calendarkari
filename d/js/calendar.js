@@ -3,7 +3,7 @@ class  Calendar{
     this.year = year;           //年
     this.month = month;         //月
     this.backgroundImage = "";  //背景画像
-    this.alpha = 0;             //透明度
+    this.alpha = 0.0;             //透明度
     this.week = [];
     this.weekColor = [];        //曜日単位の色
     this.weekLabel = [];        //曜日の表示
